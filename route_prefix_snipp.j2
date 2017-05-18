@@ -1,8 +1,8 @@
 policy-options {
     replace:
     prefix-list accept-prefixes {
-        {%- for prefix in prefixes %}
+{% for prefix in prefixes %}
         {{ prefix }};
-        {%- endfor %}
+{% endfor %}
     }
 }

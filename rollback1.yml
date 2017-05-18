@@ -1,6 +1,6 @@
 ---
   - name: Deploy Route Prefix List changes to nodes
-    hosts: vmxs
+    hosts: router
     roles: 
       - Juniper.junos
     connection: local
@@ -21,6 +21,7 @@
     - name: Create Junos configurations from Jinja2
       junos_rollback: >
         host={{ inventory_hostname }}
-        user=jalphonso
+        user=jalphons
         rollback=1
+        timeout=60
 #        confirm=1

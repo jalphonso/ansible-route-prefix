@@ -1,29 +1,28 @@
 ---
   - name: Deploy Route Prefix List changes to nodes
-    hosts: vmxs
+    hosts: router
     roles: 
       - Juniper.junos
     connection: local
     gather_facts: no
     vars:
-      - junos_jinja_template: "route_prefix_snipp.j2"
-      - path: "."
+      - junos_jinja_template: ./route_prefix_snipp.j2
+      - junos_config: ./route_prefix_snipp.conf
     vars_files:
-      - "vars.yml"
+      - vars.yml
 
     tasks:
 
-#    - name: Retrieve information from devices running Junos
-#      junos_get_facts:
-#        host={{ inventory_hostname }}
-#      register: junos
+    - template:
+        src: "{{ junos_jinja_template }}"
+        dest: "{{ junos_config }}"
 
-    - name: Create Junos configurations from Jinja2
-      junos_config: >
-        src={{ junos_jinja_template }}
-        src_format=text
-        host={{ inventory_hostname }}
-        backup=yes
-        replace=yes
-        username=jalphonso
-#        confirm=1
+    - name: Deploy Junos config to device
+      junos_install_config:
+        file: "{{ junos_config }}"
+        diffs_file: diff
+        host: "{{ inventory_hostname }}"
+        replace: yes
+        user: jalphons
+        timeout: 60
+    #    confirm: 1
