@@ -1,12 +1,11 @@
-# ansible-route-prefix
-push route prefix changes to devices via ansible
+This playbook demonstrates how to install or
+update a route prefix list on a Junos device.
 
-Tested using Ansible 2.3
-
-To use simply update your host/username info and then
-execute:
+To run, update credentials in group_vars/all.yml,
+list of hosts in site.yml, and execute:
 ```
-ansible-playbook -i hosts deploy_route_prefix.pb.yml -vv
+ansible-playbook -i hosts site.yml -vv
 ```
 
-A diff of the config will be saved
+A diff of the config will be saved for each
+device with a timestamp.

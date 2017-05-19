@@ -1,4 +1,6 @@
 ---
+username: ansible
+password: password1
 prefixes:
     - 10.0.0.0/8
     - 172.16.0.0/12
