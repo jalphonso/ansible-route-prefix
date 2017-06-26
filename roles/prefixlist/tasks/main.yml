@@ -1,6 +1,12 @@
 ---
 - name: Get TimeDateStamp
   set_fact: mydate="{{lookup('pipe','date +%Y%m%d%H%M%S')}}"
+- name: Process Prefixlist input txt file and convert to yaml
+  command: ./convert_ip_cidr_txt_to_yaml.py
+  args:
+    chdir: "{{ role_path }}/files"
+  delegate_to: 127.0.0.1
+  run_once: true
 - name: Build config snippet from template
   template:
     src: route_prefix_snipp.j2
