@@ -1,0 +1,30 @@
+---
+
+- hosts: routers
+  connection: local
+  gather_facts: no
+  roles:
+  - role: Juniper.junos
+
+  tasks:
+  - name: Validate, Summarize, Sort IP Prefixes
+    action: Normalize_IP_Prefixes
+    run_once: true
+    register: results
+
+  - name: save prefixes to var
+    set_fact:
+      prefixes: "{{ results['prefixes'] }}"
+    run_once: true
+
+  - name: Build config snippet from template
+    template:
+      src: templates/route_prefix_snipp.j2
+      dest: "configs/{{inventory_hostname}}-route_prefix_snipp.conf"
+
+  - name: Deploy Junos config to device
+    juniper_junos_config:
+      src: "configs/{{inventory_hostname}}-route_prefix_snipp.conf"
+      dest_dir: output
+      host: "{{ inventory_hostname }}"
+      load: replace

@@ -1,8 +1,0 @@
----
-
-- hosts: routers
-  connection: local
-  gather_facts: no
-  roles:
-  - role: Juniper.junos
-  - role: prefixlist

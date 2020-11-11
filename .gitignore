@@ -1,4 +1,8 @@
-backup/
+configs/
+output/
+*.swp
 *.retry
 *.conf
 *.diff
+*.pyc
+__pycache__
